@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 // function connect (mapStateToProps, mapDispatchToProps) => fnThatTakesAComponent => newComponent
-import { receiveAlbums } from '../myRedux';
+import { fetchAlbumsFromServer } from '../myRedux';
 import Albums from '../components/Albums';
 
 // const mapStateToProps = function ({ albums }, ownProps) {
@@ -16,7 +16,7 @@ const mapStateToProps = function (state, ownProps) {
 // What does this do?
 const mapDispatchToProps = function (dispatch) {
 	return {
-		loadAlbums: (albums) => dispatch(receiveAlbums(albums))
+		loadAlbums: () => dispatch(fetchAlbumsFromServer())
 	};
 };
 

@@ -9,6 +9,6 @@ import store from './myRedux';
 ReactDOM.render(
 	<Provider store={store}>
 		<AppContainer />
-	</Provider>, 
+	</Provider>,
   document.getElementById('app')
 );

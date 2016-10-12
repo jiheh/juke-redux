@@ -1,15 +1,11 @@
 'use strict';
 
 import React from 'react';
-import { convertAlbum } from '../containers/AppContainer';
 
 class Albums extends React.Component {
 
   componentDidMount () {
-    fetch('/api/albums/')
-      .then(res => res.json())
-      .then(albums => albums.map(album => convertAlbum(album)))
-      .then(albums => this.props.loadAlbums(albums))
+    this.props.loadAlbums();
   }
 
   render() {
@@ -29,7 +25,7 @@ class Albums extends React.Component {
                   <small>{album.songs.length}</small>
                 </div>
               </a>
-            </div>     
+            </div>
           ))}
 
         </div>
