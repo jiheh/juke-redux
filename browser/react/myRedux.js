@@ -3,12 +3,16 @@ import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 
 import initialState from './initialState';
-import { convertAlbum } from './containers/AppContainer';
+import { convertAlbum } from './components/AppComponent';
+
+// Action Types
 
 const RECEIVE_ALBUMS_FROM_SERVER = 'RECEIVE_ALBUMS_FROM_SERVER';
 const START_PLAYING = 'START_PLAYING';
 const STOP_PLAYING = 'STOP_PLAYING';
 const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
+
+// SYNC Action Creators
 
 export const receiveAlbums = (albums) => (
 	{ type: RECEIVE_ALBUMS_FROM_SERVER, albums }
@@ -26,6 +30,8 @@ export const setCurrentSong = (currentSong, currentSongList) => (
 	}
 );
 
+// ASYNC Action Creators
+
 export const fetchAlbumsFromServer = () => {
 	return dispatch => {
 		fetch('/api/albums')
@@ -34,8 +40,6 @@ export const fetchAlbumsFromServer = () => {
 		.then(albums => dispatch(receiveAlbums(albums)));
 	}
 }
-
-// APP REDUCERS
 
 export const play = () => {
 	return dispatch => {
@@ -67,7 +71,7 @@ export const startSong = (song, list) => {
 	}
 };
 
-export const toggleOne = (selectedSong, selectedSongList) => {}
+export const toggleOne = (selectedSong, selectedSongList) => {
 	return (dispatch, getState) => {
 	    const { currentSong } = getState();
 	    if (selectedSong.id !== currentSong.id)
@@ -79,12 +83,12 @@ export const toggleOne = (selectedSong, selectedSongList) => {}
 export const toggle = () => {
 	return (dispatch, getState) => {
 	  const { isPlaying } = getState();
-	  if (isPlaying) dispatch(pause()); 
+	  if (isPlaying) dispatch(pause());
 	  else dispatch(play());
 	}
 };
 
-//
+// Reducers
 
 function albums (state = initialState.albums, action) {
 	switch (action.type) { 
