@@ -13,7 +13,7 @@ class Albums extends React.Component {
       <div>
         <h3>Albums</h3>
         <div className="row">
-
+        
           {this.props.albums.map((album) => (
             <div className="col-xs-4" key={album.id}>
               <a className="thumbnail" href="#">

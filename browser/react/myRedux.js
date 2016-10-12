@@ -8,6 +8,7 @@ import { convertAlbum } from './components/AppComponent';
 // Action Types
 
 const RECEIVE_ALBUMS_FROM_SERVER = 'RECEIVE_ALBUMS_FROM_SERVER';
+const RECEIVE_ALBUM_FROM_SERVER = 'RECEIVE_ALBUM_FROM_SERVER';
 const START_PLAYING = 'START_PLAYING';
 const STOP_PLAYING = 'STOP_PLAYING';
 const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
@@ -16,6 +17,9 @@ const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
 
 export const receiveAlbums = (albums) => (
 	{ type: RECEIVE_ALBUMS_FROM_SERVER, albums }
+);
+export const receiveAlbum = (album) => (
+	{ type: RECEIVE_ALBUM_FROM_SERVER, album}
 );
 export const startPlaying = () => (
 	{ type: START_PLAYING }
@@ -38,6 +42,15 @@ export const fetchAlbumsFromServer = () => {
 		.then(res => res.json())
 		.then(albums => albums.map(album => convertAlbum(album)))
 		.then(albums => dispatch(receiveAlbums(albums)));
+	}
+}
+
+export const fetchAlbumFromServer = () => {
+	return dispatch => {
+		fetch(`/api/albums/1`)
+		.then(res => res.json())
+		.then(album => convertAlbum(album))
+		.then(album => dispatch(receiveAlbum(album)));
 	}
 }
 
@@ -97,6 +110,13 @@ function albums (state = initialState.albums, action) {
 	}
 }
 
+function album (state = initialState.album, action) {
+	switch (action.type) { 
+		case RECEIVE_ALBUM_FROM_SERVER: return action.album;
+		default: return state;
+	}
+}
+
 function isPlaying (state = false, action) {
 	switch (action.type) {
     	case START_PLAYING: return true;
@@ -120,6 +140,7 @@ function currentSongList (state = [], action) {
 };
 
 const rootReducer = combineReducers({
+	album,
 	albums,
 	isPlaying,
 	currentSong,

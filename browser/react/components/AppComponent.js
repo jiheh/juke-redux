@@ -6,10 +6,10 @@ import initialState from '../initialState';
 import AUDIO from '../audio';
 
 import Sidebar from './Sidebar';
-import Album from './Album';
 import Player from './Player';
 
 import AlbumsContainer from '../containers/AlbumsContainer';
+import SongsContainer from '../containers/SongsContainer';
 
 const convertSong = song => {
   song.audioUrl = `/api/songs/${song.id}/audio`;
@@ -44,9 +44,9 @@ export default class AppComponent extends Component {
   }
 
   componentDidMount () {
-    fetch('/api/albums/1')
-      .then(res => res.json())
-      .then(album => this.onLoad(convertAlbum(album)));
+    // fetch('/api/albums/1')
+    //   .then(res => res.json())
+    //   .then(album => this.onLoad(convertAlbum(album)));
 
     AUDIO.addEventListener('ended', () =>
       this.next());
@@ -117,12 +117,7 @@ export default class AppComponent extends Component {
         </div>
         <div className="col-xs-10">
           <AlbumsContainer />
-          <Album
-            album={this.state.album}
-            currentSong={this.props.currentSong}
-            isPlaying={this.props.isPlaying}
-            toggle={this.props.toggleOne}
-          />
+          <SongsContainer />
         </div>
         <Player
           currentSong={this.props.currentSong}
